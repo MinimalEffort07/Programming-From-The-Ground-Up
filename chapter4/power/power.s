@@ -76,7 +76,6 @@ start_loop:
     cmpl $1, %ecx       # Compare the exponent value to 1
     je end_loop         # Jump to exit if exponent is == to 1 
 
-    addl 8(%ebp), -4(%ebp) # Move the running count into eax 
     movl -4(%ebp), %eax # Move the running count into eax 
     imul %ebx, %eax     # multiple the running count with the base parameter and 
                         # store the result in eax
