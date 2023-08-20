@@ -5,7 +5,7 @@
 #   Emmanuel Christianos
 #
 # Data:
-#   data_items: array of 4 byte integers with a trailing 0 to indicate the end 
+#   data_items: array of 4 byte integers with a trailing 255 to indicate the end 
 #   of the array. 
 #
 # Variables:
@@ -26,15 +26,19 @@ _start:
     movl $0, %edi                       # Initialize the index variable 
     movl data_items(,%edi,4), %eax      # Initializes %eax to store the first value of data_items
     movl %eax, %ebx                     # Initializes %eax to store first item as current max
+    cmpl $255, %eax                     # Compare current value against 255
+    je exit                             # Jump to exit symbol if current value is 255
 
 start_loop:
-    cmpl $255, %eax                     # Compare current value against 0
-    je exit                             # Jump to exit symbol if current value is 0
-
     incl %edi                           # Increment the counter
     movl data_items(,%edi,4), %eax      # Store data_list[edi] in eax
+
+    cmpl $255, %eax                     # Compare current value against 255
+    je exit                             # Jump to exit symbol if current value is 255
+
     cmpl %ebx, %eax                     # Compare current value against maximum 
-    jle start_loop                      # Jump back to start of loop if current value is < max
+    jle start_loop                      # Jump back to start of loop if current value is <= max
+
     movl %eax, %ebx                     # Current val is greater than max, update max to current val
     jmp start_loop                      # Jump to start of loop
 
