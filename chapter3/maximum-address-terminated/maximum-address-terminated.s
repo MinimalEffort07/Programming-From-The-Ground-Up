@@ -21,7 +21,7 @@
 .section .data
 
 len_items:
-.long 0
+.long 9
 
 items:
 .long 1,32,42,2,4,200,2,0,253
